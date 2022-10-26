@@ -10,30 +10,28 @@
 generateUser()
 
 function generateUser(){
-    fetch('https://jsonplaceholder.typicode.com/users')
+    fetch('https://jsonplaceholder.typicode.com/users/1?_embed=posts')
     .then(response => response.json())
-    .then(usersArr => {
+    .then(user => {
         let usersWrapper = document.querySelector('.usersWrapper')
-        let oneUSER = usersArr[0]
-        console.dir(oneUSER)
 
-        let userName = oneUSER.name
-        let userNickname = oneUSER.username
-        let userEmail = oneUSER.email
-        let userPhone = oneUSER.phone
-        let userWeb = oneUSER.website
-        let userWork = oneUSER.company.name
-        let userStreet = oneUSER.address.street
-        let userApartment = oneUSER.address.suite
-        let userCity = oneUSER.address.city
-        let userZipcode = oneUSER.address.zipcode
+        let userName = user.name
+        let userNickname = user.username
+        let userEmail = user.email
+        let userPhone = user.phone
+        let userWeb = user.website
+        let userWork = user.company.name
+        let userStreet = user.address.street
+        let userApartment = user.address.suite
+        let userCity = user.address.city
+        let userZipcode = user.address.zipcode
         
-        let userGeoLat = oneUSER.address.geo.lat
-        let userGeoLng = oneUSER.address.geo.lng
-        
+        let userGeoLat = user.address.geo.lat
+        let userGeoLng = user.address.geo.lng
         let userGoogle = `https://maps.google.com/maps?q=${userGeoLat},${userGeoLng}`
+
+      
         
-        console.log(userGoogle)
         let userNameElement = document.createElement('h2')
         let userNicknameElement = document.createElement('p')
         let userEmailElement = document.createElement('p')
@@ -41,6 +39,14 @@ function generateUser(){
         let userWebElement = document.createElement('p')
         let userWorkElement = document.createElement('p')
         let userAddressElement = document.createElement('p')
+        
+        let userPostWrap = document.createElement('ul')
+        let userPostHeader = document.createElement('h3')
+
+        userPostHeader.textContent = 'All comments:'
+
+
+        userPostWrap.classList.add('postsWrap')
 
         userNameElement.innerHTML  = userName
         userNicknameElement.innerHTML  = `<strong>Nickname: </strong>${userNickname}`
@@ -51,13 +57,27 @@ function generateUser(){
         userAddressElement.innerHTML = `<strong>Address: </strong><a target='_blank' href='${userGoogle}'>${userStreet}, ${userApartment}, ${userCity}, ${userZipcode}</a>`
 
 
-        usersWrapper.append(userNameElement, userNicknameElement, userEmailElement, userPhoneElement, userWebElement, userWorkElement, userAddressElement)
+        usersWrapper.append(userNameElement, userNicknameElement, userEmailElement, userPhoneElement, userWebElement, userWorkElement, userAddressElement,userPostHeader,userPostWrap)
+        userPostWrap.append()
+
+        // 4. Šiame puslapyje turės būti atvaizduojama:
+        //   4.1. Visi vartotojo parašyti įrašai (posts). Post'ų įrašuose nereikia atvaizduoti komentarų. Kiekvienas post'as turi turėti nuorodą.
+        let userPostsArr = user.posts
+        userPostsArr.forEach(post => {
+            let postID = post.id
+            let postTitle = post.title
+            let postTitleElement = document.createElement('li')
+            postTitleElement.innerHTML = `post id${postID}: <a href="#">${postTitle}</a>`
+            userPostWrap.append(postTitleElement)
+        });
+
+        //   4.2. Visi vartotojo sukurti foto albumai. Kiekvienas albumas turės:
+        //     4.2.1. Albumo pavadinimą, kuris turi būti nuoroda. Kol kas nuoroda gali niekur nevesti.   
+
+
+
 
 
     })
 }
-// 4. Šiame puslapyje turės būti atvaizduojama:
-//   4.1. Visi vartotojo parašyti įrašai (posts). Post'ų įrašuose nereikia atvaizduoti komentarų. Kiekvienas post'as turi turėti nuorodą.
-//   4.2. Visi vartotojo sukurti foto albumai. Kiekvienas albumas turės:
-//     4.2.1. Albumo pavadinimą, kuris turi būti nuoroda. Kol kas nuoroda gali niekur nevesti.
 
