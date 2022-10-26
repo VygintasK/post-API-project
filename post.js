@@ -17,14 +17,17 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=15?_commit&_embed=comme
         let comentsArr = element.comments
         let postWrap = document.createElement('div')
         let postTitle = document.createElement('h2')
+        let postID = element.id
         let authorUser = document.createElement('a')
         let commentSectionIndicator = document.createElement('h3')
         let commentWrap = document.createElement('div')
         let postBody = document.createElement('p')
 
+        console.log(postID)
         authorUser.setAttribute('href','./user.html')
         commentSectionIndicator.classList.add('commentSectionIndicator')
         postTitle.classList.add('postTitle')
+        postTitle.setAttribute('id',postID)
         commentWrap.classList.add('comment-wraps')
 
         authorUser.textContent =`article by: ${user.name}` 
