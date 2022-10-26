@@ -67,7 +67,7 @@ function generateUser(){
             let postID = post.id
             let postTitle = post.title
             let postTitleElement = document.createElement('li')
-            postTitleElement.innerHTML = `post id${postID}: <a href="#">${postTitle}</a>`
+            postTitleElement.innerHTML = `post id${postID}: <a href="./index.html">${postTitle}</a>`
             userPostWrap.append(postTitleElement)
         });
 
