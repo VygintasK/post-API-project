@@ -30,8 +30,6 @@ function generateUser(){
         let userGeoLng = user.address.geo.lng
         let userGoogle = `https://maps.google.com/maps?q=${userGeoLat},${userGeoLng}`
 
-      
-        
         let userNameElement = document.createElement('h2')
         let userNicknameElement = document.createElement('p')
         let userEmailElement = document.createElement('p')
@@ -42,10 +40,7 @@ function generateUser(){
         
         let userPostWrap = document.createElement('ul')
         let userPostHeader = document.createElement('h3')
-
         userPostHeader.textContent = 'All comments:'
-
-
         userPostWrap.classList.add('postsWrap')
 
         userNameElement.innerHTML  = userName
@@ -67,7 +62,9 @@ function generateUser(){
             let postID = post.id
             let postTitle = post.title
             let postTitleElement = document.createElement('li')
-            postTitleElement.innerHTML = `post id${postID}: <a href="./index.html">${postTitle}</a>`
+            console.log(postID)
+            postTitleElement.innerHTML = `post id${postID}: <a href="./index.html#${postID}">${postTitle}</a>`
+            
             userPostWrap.append(postTitleElement)
         });
 
