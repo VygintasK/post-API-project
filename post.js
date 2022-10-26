@@ -22,7 +22,7 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=15?_commit&_embed=comme
         let commentWrap = document.createElement('div')
         let postBody = document.createElement('p')
 
-        authorUser.setAttribute('href','#')
+        authorUser.setAttribute('href','./user.html')
         commentSectionIndicator.classList.add('commentSectionIndicator')
         postTitle.classList.add('postTitle')
         commentWrap.classList.add('comment-wraps')
