@@ -19,16 +19,15 @@ fetch('https://jsonplaceholder.typicode.com/users?_embed=posts')
     
 
     usersArr.forEach(user => {
-        console.log(user.name)
-        console.log(user.posts.length)
-        
+        console.log(user.id)
+        // console.log(user.posts.length)
+        let userID = user.id
         let userElement = document.createElement('a')
         let userNameElement = document.createElement('p')
-        let userPostCountElement = document.createElement('p')
 
         let {name, posts} = user
 
-        userElement.href = '#'
+        userElement.href = './user.html?user_id='+userID
         userNameElement.innerHTML = `<strong>${name} </strong> has ${posts.length} posts`
 
         userElement.append(userNameElement)

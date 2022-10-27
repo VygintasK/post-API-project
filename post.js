@@ -1,5 +1,9 @@
-let userID = 1
-let PostID = 1
+const queryParams = document.location.search;
+const urlParams = new URLSearchParams(queryParams);
+const PostID = urlParams.get('post_id');
+console.log(queryParams)
+console.log(urlParams)
+console.log(PostID)
 
 
 
@@ -20,7 +24,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts?id=${PostID}&_expand=user&_emb
 
     postTitle.textContent = title
     postAuthor.href = 'http://'+ user.website
-    postAuthorTitle.textContent = user.name
+    postAuthorTitle.textContent = user.name +' website'
     postBody.textContent = body
 
 

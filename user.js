@@ -7,9 +7,17 @@
 //   3.6. Internetinio puslapio adresas.
 //   3.7. Įmonės, kurioje dirba, pavadinimas.
 
-let userID = 1
 
-// `https://jsonplaceholder.typicode.com/users/${userID}/posts`
+
+
+const queryParams = document.location.search;
+const urlParams = new URLSearchParams(queryParams);
+const userID = urlParams.get('user_id');
+
+console.log(queryParams)
+console.log(urlParams)
+console.log(userID)
+
 fetch(`https://jsonplaceholder.typicode.com/users/${userID}?_embed=posts`)
 .then(response => response.json())
 .then(user => {
@@ -66,7 +74,7 @@ fetch(`https://jsonplaceholder.typicode.com/users/${userID}?_embed=posts`)
         let postTitle = post.title
         let postTitleElement = document.createElement('li')
         // console.log(postID)
-        postTitleElement.innerHTML = `post id ${postID}: <a href="./index.html#${postID}">${postTitle}</a>`
+        postTitleElement.innerHTML = `post id ${postID}: <a href="./post.html?post_id=${postID}">${postTitle}</a>`
         
         userPostUl.append(postTitleElement)
     });
@@ -81,7 +89,7 @@ fetch(`https://jsonplaceholder.typicode.com/users/${userID}?_embed=posts`)
             let albumID = album.id
             let albumTitle = album.title
             let albumTitleElement = document.createElement('li')
-            albumTitleElement.innerHTML = `album id ${albumID}: <a href='./albums.html'> ${albumTitle}</a>`
+            albumTitleElement.innerHTML = `album id ${albumID}: <a href='./album.html?album_id=${albumID}'> ${albumTitle}</a>`
 
             userAlbumUl.append(albumTitleElement) 
 

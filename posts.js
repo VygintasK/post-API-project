@@ -12,7 +12,7 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=15?_commit&_embed=comme
 .then(response => response.json())
 .then(data => {
     data.forEach(element => {
-
+        let userID = element.userId
         let user = element.user
         let comentsArr = element.comments
         let postWrap = document.createElement('div')
@@ -25,7 +25,7 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=15?_commit&_embed=comme
         
         // postWrap.setAttribute('id',postID)
         // console.log(postID)
-        authorUser.setAttribute('href','./user.html')
+        authorUser.setAttribute('href','./user.html?user_id='+userID)
         commentSectionIndicator.classList.add('commentSectionIndicator')
         postTitle.classList.add('postTitle')
         commentWrap.classList.add('comment-wraps')
@@ -61,7 +61,6 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=15?_commit&_embed=comme
     fetch('https://jsonplaceholder.typicode.com/albums?_limit=15&_expand=user&_embed=photos')
     .then(response => response.json())
     .then(albumsArr => {
-
         let albumWrapElement = document.createElement('div')
         let albumElementUl = document.createElement('ul')
         let albumTitleElement = document.createElement('h3')
@@ -70,20 +69,20 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=15?_commit&_embed=comme
         albumWrapElement.append(albumTitleElement, albumElementUl)
 
         albumsArr.forEach(album => {
-            console.log(album.photos[0].thumbnailUrl)  
+            // console.log(album.photos[0].thumbnailUrl)  
 
+            let albumID = album.id
             let albumElementLi = document.createElement('li')
             let albumElementName = document.createElement('a')
             let albumElementAuthor = document.createElement('p')
             let albumElementPhoto = document.createElement('img')
             
             
-            albumElementName.href ='./album.html'
+            albumElementName.href ='./album.html?album_id='+albumID
             albumElementName.textContent = album.title
             albumElementAuthor.textContent = album.user.name
             albumElementPhoto.src = album.photos[0].thumbnailUrl
 
-            albumElementLi.innerHTML =`<a href='./album.html'>${album.title}</a>`
             albumElementLi.append(albumElementName, albumElementAuthor, albumElementPhoto)
             albumElementUl.append(albumElementLi)
         });
