@@ -1,4 +1,3 @@
-console.log('veikia')
 // 8. Sukurti vartotojų puslapį (users.html), kuriame būtų atvaizduotas vartotojų sąrašas.
 //   8.1. Prie vartotojo turėtu būti jo vardas ir parašytų post'ų skaičius.
 //   8.2. Paspaudus ant vartotojo - nukreipiama į jo puslapį.
@@ -12,10 +11,7 @@ usersWraper.append(userTitleElement, usersContentWrapper)
 fetch('https://jsonplaceholder.typicode.com/users?_embed=posts')
 .then(response => response.json())
 .then(usersArr => {
-    // console.log(usersArr)
     usersArr.forEach(user => {
-        console.log(user.id)
-        // console.log(user.posts.length)
         let userID = user.id
         let userElement = document.createElement('a')
         let userNameElement = document.createElement('p')
@@ -23,7 +19,6 @@ fetch('https://jsonplaceholder.typicode.com/users?_embed=posts')
         let {name, posts} = user
 
         userElement.href = './user.html?user_id='+userID
-        console.log(userElement.href)
         userNameElement.innerHTML = `<strong>${name} </strong> has ${posts.length} posts`
 
         userElement.append(userNameElement)

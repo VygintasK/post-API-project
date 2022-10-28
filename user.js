@@ -19,9 +19,7 @@ console.log(urlParams)
 console.log(userID)
 
 const usersWrapper = document.querySelector('.usersWrapper')
-console.log(userID)
 if(userID) {
-
     fetch(`https://jsonplaceholder.typicode.com/users/${userID}?_embed=posts`)
     .then(response => response.json())
     .then(user => {
@@ -80,7 +78,7 @@ if(userID) {
             let postID = post.id
             let postTitle = post.title
             let postTitleElement = document.createElement('li')
-            // console.log(postID)
+
             postTitleElement.innerHTML = `post id ${postID}: <a href="./post.html?post_id=${postID}">${postTitle}</a>`
             
             userPostUl.append(postTitleElement)

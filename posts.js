@@ -1,7 +1,3 @@
-console.log('veikia')
-
-
-
 let postsWraper = document.querySelector('.postsWraper')
 let postsContentWrapper = document.createElement('div')
 let postTitleElement = document.createElement('h1')
@@ -12,14 +8,11 @@ fetch('https://jsonplaceholder.typicode.com/posts')
 .then(postsArr => {
 
     postsArr.forEach(post => {
-        let postID = post.id
         let postLinkElement = document.createElement('a')
         let postTitleElement = document.createElement('p')
 
-        let {title} = post
-        console.log(title)
-        postLinkElement.href = './post.html?post_id='+postID
-        console.log(postLinkElement.href)
+        let {title, id} = post
+        postLinkElement.href = './post.html?post_id='+id
         postTitleElement.innerHTML = `<strong>${title} </strong>`
 
         postLinkElement.append(postTitleElement)
