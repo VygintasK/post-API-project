@@ -7,17 +7,16 @@ console.log(PostID)
 
 const postWrapper = document.querySelector('.PostWrapper')
 if (PostID) {
-    errorIdFunction(postWrapper,'no id','index')
 
     fetch(`https://jsonplaceholder.typicode.com/posts?id=${PostID}&_expand=user&_embed=comments`)
     .then(response => response.json())
     .then(postsArr => {
-        if (!postsArr.id){
+        if (!postsArr[0].id){
             console.log
             errorIdFunction(postWrapper,'inccorect id','index') 
             return
         }
-
+        
         let postTitle = document.createElement('h1')
         let postAuthor = document.createElement('a')
         let postAuthorTitle = document.createElement('h4')
@@ -26,16 +25,15 @@ if (PostID) {
         let postLinkPosts = document.createElement('a')
         let postLinkPostsTitle = document.createElement('a')
 
-        let {title, user, body, comments} = postsArr[0]
+        let {title, user, body, comments, userId} = postsArr[0]
 
         postTitle.textContent = title
         postAuthor.href = 'http://'+ user.website
         postAuthorTitle.textContent = user.name +' website'
         postBody.textContent = body
 
-
         postLinkPostsTitle.textContent = "Kiti autoriaus įrašai"
-        postLinkPosts.href='./index.html'
+        postLinkPosts.href='./user.html?user_id='+userId
 
         postLinkPosts.append(postLinkPostsTitle)
         postAuthor.append(postAuthorTitle)
