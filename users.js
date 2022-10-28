@@ -28,6 +28,7 @@ fetch('https://jsonplaceholder.typicode.com/users?_embed=posts')
         let {name, posts} = user
 
         userElement.href = './user.html?user_id='+userID
+        console.log(userElement.href)
         userNameElement.innerHTML = `<strong>${name} </strong> has ${posts.length} posts`
 
         userElement.append(userNameElement)
