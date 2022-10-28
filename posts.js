@@ -7,26 +7,23 @@ let postsContentWrapper = document.createElement('div')
 let postTitleElement = document.createElement('h1')
 postTitleElement.textContent = 'All Posts:'
 postsWraper.append(postTitleElement, postsContentWrapper)
- /////////////////////////////////////////////////////////////
-fetch('https://jsonplaceholder.typicode.com/users?_embed=posts')
+fetch('https://jsonplaceholder.typicode.com/posts')
 .then(response => response.json())
-.then(usersArr => {
-    // console.log(usersArr)
-    usersArr.forEach(user => {
-        console.log(user.id)
-        // console.log(user.posts.length)
-        let userID = user.id
-        let userElement = document.createElement('a')
-        let userNameElement = document.createElement('p')
+.then(postsArr => {
 
-        let {name, posts} = user
+    postsArr.forEach(post => {
+        let postID = post.id
+        let postLinkElement = document.createElement('a')
+        let postTitleElement = document.createElement('p')
 
-        userElement.href = './user.html?user_id='+userID
-        console.log(userElement.href)
-        userNameElement.innerHTML = `<strong>${name} </strong> has ${posts.length} posts`
+        let {title} = post
+        console.log(title)
+        postLinkElement.href = './post.html?post_id='+postID
+        console.log(postLinkElement.href)
+        postTitleElement.innerHTML = `<strong>${title} </strong>`
 
-        userElement.append(userNameElement)
-        usersContentWrapper.append(userElement)
+        postLinkElement.append(postTitleElement)
+        postsContentWrapper.append(postLinkElement)
     });
     
 })
