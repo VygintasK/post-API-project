@@ -19,15 +19,15 @@ fetch('https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos')
         let albumTitle = document.createElement('h3')
         let albumAuthor = document.createElement('p')
         let albumAuthorLink = document.createElement('a')
-        let albumPhotosCount = document.createElement('p')
         let albumFirstPhoto = document.createElement('img')
+        let albumPhotosCount = document.createElement('p')
         let albumFirstPhotoLink = document.createElement('a')
 
         let {title, user, id, photos, userId} = album
 
-        albumFirstPhotoLink.href='./album.html?album_id='+id
-        albumAuthorLink.href='./user.html?user_id='+userId
-        
+        albumFirstPhotoLink.href=`./album.html?album_id=${id}`
+        albumAuthorLink.href=`./user.html?user_id=${userId}`
+
         albumFirstPhoto.src = photos[0].thumbnailUrl
         albumTitle.textContent = title
         albumAuthor.textContent = user.name
@@ -36,8 +36,6 @@ fetch('https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos')
         albumFirstPhotoLink.append(albumFirstPhoto)
         albumAuthorLink.append(albumAuthor)
         albumsWraper.append(albumWrap)
-        albumWrap.append(albumTitle, albumAuthorLink, albumPhotosCount, albumFirstPhotoLink )
-
+        albumWrap.append(albumTitle, albumAuthorLink, albumPhotosCount, albumFirstPhotoLink)
     });
-    
 })
