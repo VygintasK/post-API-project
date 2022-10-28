@@ -23,9 +23,7 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=15?_commit&_embed=comme
         let commentWrap = document.createElement('div')
         let postBody = document.createElement('p')
         
-        // postWrap.setAttribute('id',postID)
-        // console.log(postID)
-        authorUser.setAttribute('href','./user.html?user_id='+userID)
+        authorUser.href='./user.html?user_id='+userID
         commentSectionIndicator.classList.add('commentSectionIndicator')
         postTitle.classList.add('postTitle')
         commentWrap.classList.add('comment-wraps')
