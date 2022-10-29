@@ -54,21 +54,22 @@ navUlElement.append(homeElement,usersElement,albumsElement,postsElement)
 // 11.4.2. Albumus.
 
 let searchForm = document.createElement('form')
-searchForm.setAttribute('id','searchForm')
+searchForm.id = 'searchForm'
 
-let formInputText = document.createElement('input')
-formInputText.setAttribute('id','formInputText')
-formInputText.setAttribute('type','text')
+let InputTextElement = document.createElement('input')
+InputTextElement.id = 'searchText'
+InputTextElement.name = 'form_name_search'
+InputTextElement.type = 'text'
+navElement.append(navUlElement,searchForm)
 
 let submit = document.createElement('input')
-submit.setAttribute('type','submit')
-submit.setAttribute('value','Search')
+submit.type='submit'
+submit.value = 'Search'
 
-searchForm.addEventListener('submit', (event) => {
-    searchForm.action = './search.html'
-})
-searchForm.append(formInputText,submit)
-navElement.append(searchForm)
+searchForm.append(InputTextElement,submit)
+
+// searchForm.action = './search.html'
+searchForm.action = './search.html?search_input='+InputTextElement.name
 
 
 
