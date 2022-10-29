@@ -4,6 +4,15 @@
 //   6.2. Album autoriaus vardą. Paspaudus ant vardo - nukreipiama į autoriaus puslapį.
 //   6.3. Skiltis, kurioje atvaizduojamos visos albumo nuotraukos.
 
+
+// 6.3. Skiltis, kurioje atvaizduojamos visos albumo nuotraukos. Panaudoti library (biblioteką), kuri skirta gražiam galerijos atvaizdavimui, pvz.:
+// 6.3.1. https://photoswipe.com/
+// 6.3.2. https://nanogallery2.nanostudio.org/
+// 6.3.3. https://sachinchoolur.github.io/lightgallery.js/
+// 6.3.4. Arba bet kurią kitą.
+
+// unsplash.com/documentation.
+
 const queryParams = document.location.search;
 const urlParams = new URLSearchParams(queryParams);
 const albumID = urlParams.get('album_id');
