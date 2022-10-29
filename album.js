@@ -36,22 +36,48 @@ if (albumID) {
         let albumTitle = title
         let albumAuthor = user.name
 
-
         let albumTitleElement = document.createElement('h1')
-        let albumAuthorElement = document.createElement('a')
+        let albumAuthorElement = document.createElement('p')
         albumAuthorElement.href = `./user.html?user_id=${userID}`
-
         let albumPhotosWrapper = document.createElement('div')
+        ////////////////////////////
+        albumPhotosWrapper.classList.add("pswp-gallery", "pswp-gallery--single-column")
+        albumPhotosWrapper.id='gallery--getting-started'
+        /////////////////////////////////////
         albumTitleElement.textContent = albumTitle
         albumAuthorElement.textContent = albumAuthor
 
         albumWrap.append(albumTitleElement, albumAuthorElement, albumPhotosWrapper)
 
-
         let photosArr = album.photos
         photosArr.forEach(photo => {
-            let albumPhoto = document.createElement('img')
-            albumPhoto.src =photo.url
+            let albumPhoto = document.createElement('a')
+            // console.log(photo.thumbnailUrl)
+            // console.log(albumPhoto)
+            ////////////////////////////////////////////////////////
+            // albumPhoto.setAttribute('href','./123.jpg')
+            albumPhoto.setAttribute('href',photo.thumbnailUrl)
+            albumPhoto.setAttribute('data-pswp-width','1669')
+            albumPhoto.setAttribute('data-pswp-height','2500')
+            albumPhoto.setAttribute('target','_blank')
+            let albumPhotoimg = document.createElement('img')
+            albumPhotoimg.src='./123small.jpg'
+            // albumPhotoimg.src=photo.thumbnailUrl
+                                                                                                                     ////////////////////////////////////////
+                                                                                                                    const lightbox = new PhotoSwipeLightbox({
+                                                                                                                        // may select multiple "galleries"
+                                                                                                                        gallery: '#gallery--getting-started',
+                                                                                                                    
+                                                                                                                        // Elements within gallery (slides)
+                                                                                                                        children: 'a',
+                                                                                                                    
+                                                                                                                        // setup PhotoSwipe Core dynamic import
+                                                                                                                        pswpModule: () => import('/photoswipe/dist/photoswipe.esm.js')
+                                                                                                                    });
+                                                                                                                    lightbox.init();
+                                                                                                                    /////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////
+            albumPhoto.append(albumPhotoimg)
             albumPhotosWrapper.append(albumPhoto)
         });
     })
@@ -64,3 +90,6 @@ function errorIdFunction(wrap,reason,redirect){
                       <a href=./${redirect}.html> <= Go back</a>`
     wrap.append(error)
 }
+
+// Include Lightbox 
+import PhotoSwipeLightbox from '/photoswipe/dist/photoswipe-lightbox.esm.js';
