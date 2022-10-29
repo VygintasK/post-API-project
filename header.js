@@ -21,7 +21,6 @@ albumsElement.innerHTML = `<a href='albums.html'>ALBUMS</a> <>`
 postsElement.innerHTML = `<a href='posts.html'>POSTS</a>`
 
 navUlElement.append(homeElement,usersElement,albumsElement,postsElement)
-// headerUlElement.append(homeElement, usersElement, albumsElement, postsElement)
 
 // 11. Sukurti paieškos funkcionalumą navigacijos elemente:
 // 11.1. Navigacijos elemente sukurti formą, kuri turi text tipo input elementą (nepamiršti pridėti name atributą).
@@ -34,27 +33,23 @@ navUlElement.append(homeElement,usersElement,albumsElement,postsElement)
 // 11.4.1. Vartotojus.
 // 11.4.2. Postus.
 // 11.4.2. Albumus.
-// let searchForm = document.createElement('form')
-// searchForm.setAttribute('id','searchForm')
+console.log(document.location.pathname)
+let searchForm = document.createElement('form')
+searchForm.setAttribute('id','searchForm')
 
-// let formInputText = document.createElement('input')
-// formInputText.setAttribute('id','formInputText')
-// formInputText.setAttribute('type','text')
+let formInputText = document.createElement('input')
+formInputText.setAttribute('id','formInputText')
+formInputText.setAttribute('type','text')
 
-// let submit = document.createElement('input')
-// submit.setAttribute('type','submit')
-// submit.setAttribute('value','Search')
+let submit = document.createElement('input')
+submit.setAttribute('type','submit')
+submit.setAttribute('value','Search')
 
-// searchForm.addEventListener('submit', (event) => {
-
-//     searchForm.action = './search.html'
-
-// })
-
-
-// searchForm.append(formInputText,submit)
-
-// header.append(headerUlElement,searchForm)
+searchForm.addEventListener('submit', (event) => {
+    searchForm.action = './search.html'
+})
+searchForm.append(formInputText,submit)
+navElement.append(searchForm)
 
 
 // {/* <input type="submit" value="Create Student"> */}
