@@ -63,19 +63,13 @@ if (albumID) {
             let albumPhotoimg = document.createElement('img')
             albumPhotoimg.src='./123small.jpg'
             // albumPhotoimg.src=photo.thumbnailUrl
-                                                                                                                     ////////////////////////////////////////
-                                                                                                                    const lightbox = new PhotoSwipeLightbox({
-                                                                                                                        // may select multiple "galleries"
-                                                                                                                        gallery: '#gallery--getting-started',
-                                                                                                                    
-                                                                                                                        // Elements within gallery (slides)
-                                                                                                                        children: 'a',
-                                                                                                                    
-                                                                                                                        // setup PhotoSwipe Core dynamic import
-                                                                                                                        pswpModule: () => import('/photoswipe/dist/photoswipe.esm.js')
-                                                                                                                    });
-                                                                                                                    lightbox.init();
-                                                                                                                    /////////////////////////////////////////////////////
+            ////////////////////////////////////////
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#gallery--getting-started',
+                children: 'a',
+                pswpModule: () => import('/photoswipe/dist/photoswipe.esm.js')
+            });
+            lightbox.init();
             //////////////////////////////////////////////////////////
             albumPhoto.append(albumPhotoimg)
             albumPhotosWrapper.append(albumPhoto)
@@ -93,3 +87,5 @@ function errorIdFunction(wrap,reason,redirect){
 
 // Include Lightbox 
 import PhotoSwipeLightbox from '/photoswipe/dist/photoswipe-lightbox.esm.js';
+
+console.dir(document)
