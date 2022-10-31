@@ -47,8 +47,6 @@ searchArray.forEach(category => {
                 } else {
                     foundResult.textContent= `some sort of ERROR, what do i know`
                 }
-                
-                foundResult.href = '#'
                 foundWrapper.append(foundResult)
             });
 
