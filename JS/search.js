@@ -1,3 +1,5 @@
+init()
+
 async function init(){
     const queryParams = document.location.search;
     const urlParams = new URLSearchParams(queryParams);
@@ -5,7 +7,6 @@ async function init(){
     console.log(queryParams)
     console.log(searchInput)
     
-    // let categoryArray = ['users', 'albums', 'posts']
     let searchWrapper = document.querySelector('.searchWrapper')
     let incorrectSearchValue = document.createElement('h4')
     
@@ -18,15 +19,9 @@ async function init(){
         searchWrapper.append(incorrectSearchValue)
     } else 
     {
-
-        let users = 'users'
-        let albums = 'albums'
-        let posts = 'posts'
-
-
-        fetchingCategory(users, searchInput, searchWrapper)
-        fetchingCategory(albums, searchInput, searchWrapper)
-        fetchingCategory(posts, searchInput, searchWrapper)
+        await fetchingCategory('users', searchInput, searchWrapper)
+        await fetchingCategory('albums', searchInput, searchWrapper)
+        await fetchingCategory('posts', searchInput, searchWrapper)
 
         //////////////////////BACKUP BE ASYNC/////////////////////////////////
         // categoryArray.forEach(category => {
@@ -71,45 +66,41 @@ async function init(){
         //////////////////////////////////////////////////////
     }
 }
-init()
 
-
-
-function fetchingCategory(category, searchInput,searchWrapper ){
+async function fetchingCategory(category, searchInput,searchWrapper ){
     let infoElement = document.createElement('h2')
     let foundWrapper = document.createElement('div')
     foundWrapper.classList.add('foundWrapper')
 
-    fetch(`https://jsonplaceholder.typicode.com/${category}?q=${searchInput}`)
-    .then(response => response.json())
-    .then(result => {              
-        if(result.length >= 1){
-            infoElement.textContent =`Found ( ${result.length} ) results in "${category}" category`
+    const response = await fetch(`https://jsonplaceholder.typicode.com/${category}?q=${searchInput}`)
+    const result = await response.json()
+
+    if(result.length >= 1){
+        infoElement.textContent =`Found ( ${result.length} ) results in "${category}" category`
+        
+        result.forEach(element => {
+            let foundResult = document.createElement('p')
+            foundResult.style.display = "block"
             
-            result.forEach(element => {
-                let foundResult = document.createElement('p')
-                foundResult.style.display = "block"
-                
-                let {title,name, id} = element                                         
+            let {title,name, id} = element                                         
+            if(category === 'posts'){
+                foundResult.innerHTML=`<a href='post.html?post_id=${id}'>-- ${title}</a>`
+            }
+            else if(category === 'albums'){
+                foundResult.innerHTML=`<a href='album.html?album_id=${id}'>++ ${title}</a>`  
+            }
+            else if(category === 'users'){
+                foundResult.innerHTML=`<a href='user.html?user_id=${id}'>- ${name}</a>`
+            } else {
+                foundResult.textContent= `some sort of ERROR, what do i know`
+            }
+            foundWrapper.append(foundResult)
+        });
 
-                if(category === 'posts'){
-                    foundResult.innerHTML=`<a href='post.html?post_id=${id}'>-- ${title}</a>`
-                }
-                else if(category === 'albums'){
-                    foundResult.innerHTML=`<a href='album.html?album_id=${id}'>++ ${title}</a>`  
-                }
-                else if(category === 'users'){
-                    foundResult.innerHTML=`<a href='user.html?user_id=${id}'>- ${name}</a>`
-                } else {
-                    foundResult.textContent= `some sort of ERROR, what do i know`
-                }
-                foundWrapper.append(foundResult)
-            });
+    } else{
+        infoElement.textContent = `Sorry, nothing found in "${category}" category`
+    }
+    searchWrapper.append(infoElement, foundWrapper)
 
-        } else{
-            infoElement.textContent = `Sorry, nothing found in "${category}" category`
-        }
-        searchWrapper.append(infoElement, foundWrapper)
-    }) 
 } 
 
