@@ -69,7 +69,7 @@ async function init(){
 
 async function fetchingCategory(category, searchInput,searchWrapper ){
     let infoElement = document.createElement('h2')
-    let foundWrapper = document.createElement('div')
+    let foundWrapper = document.createElement('ul')
     foundWrapper.classList.add('foundWrapper')
 
     const response = await fetch(`https://jsonplaceholder.typicode.com/${category}?q=${searchInput}`)
@@ -79,7 +79,7 @@ async function fetchingCategory(category, searchInput,searchWrapper ){
         infoElement.textContent =`Found ( ${result.length} ) results in "${category}" category`
         
         result.forEach(element => {
-            let foundResult = document.createElement('p')
+            let foundResult = document.createElement('li')
             foundResult.style.display = "block"
             
             let {title,name, id} = element                                         

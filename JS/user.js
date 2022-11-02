@@ -1,66 +1,65 @@
-
-const queryParams = document.location.search;
-const urlParams = new URLSearchParams(queryParams);
-const userID = urlParams.get('user_id');
-
-console.log(queryParams)
-console.log(urlParams)
-console.log(userID)
-
-const usersWrapper = document.querySelector('.usersWrapper')
-if(userID) {
-    fetch(`https://jsonplaceholder.typicode.com/users/${userID}?_embed=posts`)
-    .then(response => response.json())
-    .then(user => {
-        if(!user.id) {
-            errorIdFunction(usersWrapper,'incorrect id','users')
-            return
-        }
-        let {name, username, email, phone, website, company, address } = user
-        let {street, suite, city, zipcode, geo } = address
-
-        let userGoogle = `https://maps.google.com/maps?q=${geo.lat},${geo.lng}`
-        let userPostUl = document.createElement('ul')
-        let userPostHeader = document.createElement('h3')
-        userPostHeader.textContent = 'All comments:'
-        userPostUl.classList.add('postsWrap')
-        let userAlbumUl = document.createElement('ul')
-        let userAlbumTittle = document.createElement('h3')
-        userAlbumTittle.textContent = 'All albums:'
-
-        usersWrapper.innerHTML= `
-        <h2>${name}</h2>
-        <p><strong>Nickname: </strong>${username}</p>
-        <p><strong>E-mail: </strong><a href='mailto:Sincere@april.biz'>${email}</a></p>
-        <p><strong>Phone: </strong><a href='tel:${phone}'>${phone}</a></p>
-        <p><strong>Web address: </strong><a target='_blank' href='http://www.hildegard.org'>${website}</a></p>
-        <p><strong>Working at: </strong>${company.name}</p>
-        <p><strong>Address: </strong><a target='_blank' href='${userGoogle}'>${street}, ${suite}, ${city}, ${zipcode}</a></p>`
-
-        usersWrapper.append(userPostHeader,userPostUl, userAlbumTittle, userAlbumUl)
-
-        let userPostsArr = user.posts
-        userPostsArr.forEach(post => {
-            let postTitleElement = document.createElement('li')
-            postTitleElement.innerHTML = `post id ${post.id}: <a href="./post.html?post_id=${post.id}">${post.title}</a>`
-            userPostUl.append(postTitleElement)
-        });
-
-        fetch(`https://jsonplaceholder.typicode.com/users/${userID}/albums`)
+init()
+function init(){
+    const queryParams = document.location.search;
+    const urlParams = new URLSearchParams(queryParams);
+    const userID = urlParams.get('user_id');
+    console.log(queryParams)
+    console.log(userID)
+    
+    const usersWrapper = document.querySelector('.usersWrapper')
+    if(userID) {
+        fetch(`https://jsonplaceholder.typicode.com/users/${userID}?_embed=posts`)
         .then(response => response.json())
-        .then(albumsArr => {
-            albumsArr.forEach(album => {
-                let albumTitleElement = document.createElement('li')
-                albumTitleElement.innerHTML = `album id ${album.id}: <a href='./album.html?album_id=${album.id}'> ${album.title}</a>`
-                userAlbumUl.append(albumTitleElement) 
+        .then(user => {
+            if(!user.id) {
+                errorIdFunction(usersWrapper,'incorrect id','users')
+                return
+            }
+            let {name, username, email, phone, website, company, address } = user
+            let {street, suite, city, zipcode, geo } = address
+    
+            let userGoogle = `https://maps.google.com/maps?q=${geo.lat},${geo.lng}`
+            let userPostUl = document.createElement('ul')
+            let userPostHeader = document.createElement('h3')
+            userPostHeader.textContent = 'All comments:'
+            userPostUl.classList.add('postsWrap')
+            let userAlbumUl = document.createElement('ul')
+            let userAlbumTittle = document.createElement('h3')
+            userAlbumTittle.textContent = 'All albums:'
+    
+            usersWrapper.innerHTML= `
+            <h2>${name}</h2>
+            <p><strong>Nickname: </strong>${username}</p>
+            <p><strong>E-mail: </strong><a href='mailto:Sincere@april.biz'>${email}</a></p>
+            <p><strong>Phone: </strong><a href='tel:${phone}'>${phone}</a></p>
+            <p><strong>Web address: </strong><a target='_blank' href='http://www.hildegard.org'>${website}</a></p>
+            <p><strong>Working at: </strong>${company.name}</p>
+            <p><strong>Address: </strong><a target='_blank' href='${userGoogle}'>${street}, ${suite}, ${city}, ${zipcode}</a></p>`
+    
+            usersWrapper.append(userPostHeader,userPostUl, userAlbumTittle, userAlbumUl)
+    
+            let userPostsArr = user.posts
+            userPostsArr.forEach(post => {
+                let postTitleElement = document.createElement('li')
+                postTitleElement.innerHTML = `post id ${post.id}: <a href="./post.html?post_id=${post.id}">${post.title}</a>`
+                userPostUl.append(postTitleElement)
+            });
+    
+            fetch(`https://jsonplaceholder.typicode.com/users/${userID}/albums`)
+            .then(response => response.json())
+            .then(albumsArr => {
+                albumsArr.forEach(album => {
+                    let albumTitleElement = document.createElement('li')
+                    albumTitleElement.innerHTML = `album id ${album.id}: <a href='./album.html?album_id=${album.id}'> ${album.title}</a>`
+                    userAlbumUl.append(albumTitleElement) 
+                })
             })
         })
-    })
-
-} else {
-    errorIdFunction(usersWrapper,'no id','users')
+    
+    } else {
+        errorIdFunction(usersWrapper,'no id','users')
+    }
 }
-
 function errorIdFunction(wrap,reason,redirect){
     let error = document.createElement('span')
     error.innerHTML =`<h1>ERROR - ${reason}</h1>

@@ -1,14 +1,12 @@
-// API nuoroda: https://jsonplaceholder.typicode.com
 
-// 1. Sukurti puslapį, kuriame bus atvaizduojami įrašai (posts.html). Kiekvienas įrašas turi:
-//   1.1. Pavadinimą.
-//   1.2. Pastraipą su įrašo (post) turiniu.
-//   1.3. Autorių. Tai turi būti nuoroda. Kol kas ji gali niekur nevesti.
-
+init()
+function init(){
+    
+}
 
 let allPostsWrapper = document.querySelector('.allPostsWrapper')
 
-fetch('https://jsonplaceholder.typicode.com/posts?_limit=15?_commit&_embed=comments&_expand=user')
+fetch('https://jsonplaceholder.typicode.com/posts?_limit=20?_commit&_embed=comments&_expand=user')
 .then(response => response.json())
 .then(data => {
     data.forEach(element => {
@@ -51,11 +49,6 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=15?_commit&_embed=comme
         });
     })
 
-
-
-
-
-
     fetch('https://jsonplaceholder.typicode.com/albums?_limit=15&_expand=user&_embed=photos')
     .then(response => response.json())
     .then(albumsArr => {
@@ -86,6 +79,15 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=15?_commit&_embed=comme
         });
     })
 })
+
+
+
+// API nuoroda: https://jsonplaceholder.typicode.com
+
+// 1. Sukurti puslapį, kuriame bus atvaizduojami įrašai (posts.html). Kiekvienas įrašas turi:
+//   1.1. Pavadinimą.
+//   1.2. Pastraipą su įrašo (post) turiniu.
+//   1.3. Autorių. Tai turi būti nuoroda. Kol kas ji gali niekur nevesti.
 // 2. Po kiekvienu įrašu (post) pridėti posto komentarus. Kiekvienas komentaras turi:
 //   2.1. Komentaro pavadinimą.
 //   2.2. Komentaro turinį - pastraipą.
