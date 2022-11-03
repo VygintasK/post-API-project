@@ -1,10 +1,10 @@
-// 9. Tokiu pačiu principu, kaip ir vartotojų puslapį, sukurti puslapį albumams (albums.html).
-//   9.1. Prie kiekvieno albumo turi būti:
-//     9.1.1. Parašytas jo pavadinimas.
-//     9.1.2. Parašytas vartotojo, sukūrusio šį albumą, vardas.
-//     9.1.3. Albume esančių nuotraukų skaičius.
-//     9.1.4. Viena nuotrauka
+import initHeader from './header.js'
+import {firstLetterUpper} from './functions.js'
+initHeader()
 init()
+
+
+
 function init(){
     let albumsWraper = document.querySelector('.albumsWraper')
     let albumsTitleElement = document.createElement('h1')
@@ -25,7 +25,7 @@ function init(){
             let albumPhotosCount = document.createElement('p')
             let albumFirstPhotoLink = document.createElement('a')
 
-            albumTitle.textContent = title
+            albumTitle.textContent = firstLetterUpper(title)
             albumAuthor.textContent = user.name
             albumFirstPhoto.src = photos[0].thumbnailUrl
             albumAuthorLink.href=`./user.html?user_id=${userId}`
@@ -39,3 +39,9 @@ function init(){
         });
     })
 }
+// 9. Tokiu pačiu principu, kaip ir vartotojų puslapį, sukurti puslapį albumams (albums.html).
+//   9.1. Prie kiekvieno albumo turi būti:
+//     9.1.1. Parašytas jo pavadinimas.
+//     9.1.2. Parašytas vartotojo, sukūrusio šį albumą, vardas.
+//     9.1.3. Albume esančių nuotraukų skaičius.
+//     9.1.4. Viena nuotrauka

@@ -1,57 +1,57 @@
+import initHeader from './header.js'
+import {param} from './functions.js'
+import PhotoSwipeLightbox from '/photoswipe/dist/photoswipe-lightbox.esm.js'
+
+initHeader()
 init()
 
-import PhotoSwipeLightbox from '/photoswipe/dist/photoswipe-lightbox.esm.js'
-function init(){
-    const queryParams = document.location.search;
-    const urlParams = new URLSearchParams(queryParams);
-    const albumID = urlParams.get('album_id');
-    console.log(queryParams)
-    console.log(albumID)
-    
+async function init(){
+    const albumID = param('album_id')
+
     const albumWrap = document.querySelector('.albumWrap')
     if (albumID) {
-        fetch(`https://jsonplaceholder.typicode.com/albums/${albumID}?_expand=user&_embed=photos`)
-        .then(response => response.json())
-        .then(album => {
-            if (!album.id){
-                errorIdFunction(albumWrap,'incorrect id','albums') 
-                return
-            }
-            let {userId, title, user, photos} = album
-    
-            let albumTitleElement = document.createElement('h1')
-            albumTitleElement.textContent = title
-            let albumAuthorElement = document.createElement('p')
-            albumAuthorElement.textContent = user.name
-            albumAuthorElement.href = `./user.html?user_id=${userId}`
-            let albumPhotosWrapper = document.createElement('div')
-            albumPhotosWrapper.classList.add("pswp-gallery", "pswp-gallery--single-column")
-            albumPhotosWrapper.id='gallery--getting-started'
-            let photosArr = photos
+        const response = await fetch(`https://jsonplaceholder.typicode.com/albums/${albumID}?_expand=user&_embed=photos`)
+        const album = await response.json()
+        
+        if (!album.id){
+            errorIdFunction(albumWrap,'incorrect id','albums') 
+            return
+        }
+        let {userId, title, user, photos} = album
+
+        let albumTitleElement = document.createElement('h1')
+        albumTitleElement.textContent = title
+        let albumAuthorElement = document.createElement('p')
+        albumAuthorElement.textContent = user.name
+        albumAuthorElement.href = `./user.html?user_id=${userId}`
+        let albumPhotosWrapper = document.createElement('div')
+        albumPhotosWrapper.classList.add("pswp-gallery", "pswp-gallery--single-column")
+        albumPhotosWrapper.id='gallery--getting-started'
+        let photosArr = photos
+        
+        albumWrap.append(albumTitleElement, albumAuthorElement, albumPhotosWrapper)
+
+        photosArr.forEach(photo => {
+            let albumPhoto = document.createElement('a')
+            albumPhoto.setAttribute('href',photo.thumbnailUrl)
+            albumPhoto.setAttribute('target','_blank')
+            albumPhoto.setAttribute('data-pswp-width','1669')
+            albumPhoto.setAttribute('data-pswp-height','2500')
             
-            albumWrap.append(albumTitleElement, albumAuthorElement, albumPhotosWrapper)
-    
-            photosArr.forEach(photo => {
-                let albumPhoto = document.createElement('a')
-                albumPhoto.setAttribute('href',photo.thumbnailUrl)
-                albumPhoto.setAttribute('target','_blank')
-                albumPhoto.setAttribute('data-pswp-width','1669')
-                albumPhoto.setAttribute('data-pswp-height','2500')
-                
-                let albumPhotoImg = document.createElement('img')
-                albumPhotoImg.src=photo.thumbnailUrl
-    
-                const lightbox = new PhotoSwipeLightbox({
-                    gallery: '#gallery--getting-started',
-                    children: 'a',
-                    pswpModule: () => import('/photoswipe/dist/photoswipe.esm.js')
-                });
-                lightbox.init();
-    
-                albumPhoto.append(albumPhotoImg)
-                albumPhotosWrapper.append(albumPhoto)
+            let albumPhotoImg = document.createElement('img')
+            albumPhotoImg.src=photo.thumbnailUrl
+
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#gallery--getting-started',
+                children: 'a',
+                pswpModule: () => import('/photoswipe/dist/photoswipe.esm.js')
             });
-        })
+            lightbox.init();
+
+            albumPhoto.append(albumPhotoImg)
+            albumPhotosWrapper.append(albumPhoto)
+        });
+
     } else {
         errorIdFunction(albumWrap,'no id','albums')
     }

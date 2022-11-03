@@ -1,14 +1,13 @@
+import initHeader from './header.js'
+initHeader()
+initIndex()
 
-init()
-function init(){
+async function initIndex(){   
+    let allPostsWrapper = document.querySelector('.allPostsWrapper')
+
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=20?_commit&_embed=comments&_expand=user')
+    const data = await response.json()
     
-}
-
-let allPostsWrapper = document.querySelector('.allPostsWrapper')
-
-fetch('https://jsonplaceholder.typicode.com/posts?_limit=20?_commit&_embed=comments&_expand=user')
-.then(response => response.json())
-.then(data => {
     data.forEach(element => {
         let userID = element.userId
         let user = element.user
@@ -78,7 +77,8 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=20?_commit&_embed=comme
             albumElementUl.append(albumElementLi)
         });
     })
-})
+}
+
 
 
 

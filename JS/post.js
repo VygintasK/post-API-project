@@ -1,29 +1,37 @@
+import initHeader from './header.js'
+initHeader()
+import {firstLetterUpper as upperCase} from './functions.js'
+
+import {param} from './functions.js'
+
 init()
-function init(){
-    const queryParams = document.location.search;
-    const urlParams = new URLSearchParams(queryParams);
-    const PostID = urlParams.get('post_id');
-    console.log(queryParams)
-    console.log(urlParams)
+async function init(){
+    const PostID = param('post_id')
     console.log(PostID)
     
     const postWrapper = document.querySelector('.PostWrapper')
     if (PostID) {
-        fetch(`https://jsonplaceholder.typicode.com/posts?id=${PostID}&_expand=user&_embed=comments`)
-        .then(response => response.json())
-        .then(postsArr => {
+
+        const response = await fetch(`https://jsonplaceholder.typicode.com/posts?id=${PostID}&_expand=user&_embed=comments`)
+        const postsArr = await response.json()
+
             if (!postsArr[0].id){
                 errorIdFunction(postWrapper,'incorrect id','index') 
                 return
             }
             let {title, user, body, comments, userId} = postsArr[0]
             postWrapper.innerHTML = `
-            <h1>${title}</h1>
+            <h1>${upperCase(title)}</h1>
             <a href='http://${user.website}'> <h4>${user.name} website</h4> </a>
-            <p>${body}</p>
+            <p>${upperCase(body)}</p>
             <a href='./user.html?user_id=${userId}'>Kiti autoriaus įrašai</a>
             <h3>ALL COMMENTS:</h3>`
-    
+
+            
+
+
+            //pasidaryt coment render funkcija
+
             let postComments = document.createElement('div')
             let commentWrapUl = document.createElement('ul')
             postComments.append(commentWrapUl)
@@ -32,13 +40,13 @@ function init(){
             comments.forEach(comment => {
                 let commentLi = document.createElement('li')
                 commentLi.innerHTML =`
-                <h4>${comment.name}</h4>
-                <p>${comment.body}</p>
+                <h4>${upperCase(comment.name)}</h4>
+                <p>${upperCase(comment.body)}</p>
                 <a href='#'>${comment.email}</a>`
     
                 commentWrapUl.append(commentLi)
             });
-        })
+        
     } else {
         errorIdFunction(postWrapper,'no id','index')
     }   

@@ -1,3 +1,6 @@
+import initHeader from './header.js'
+initHeader()
+
 init()
 function init(){
     let usersWrapper = document.querySelector('.usersWrapper')

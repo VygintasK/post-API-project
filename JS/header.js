@@ -1,6 +1,6 @@
+export default initHeader
 
-init()
-function init(){
+function initHeader(){
     const headerElement = document.createElement('header') 
     const logoElement = document.createElement('img')
     const navElement = document.createElement('nav')
@@ -51,6 +51,7 @@ function init(){
     headerElement.append(logoElement,navElement)
     navElement.append(navUlElement)
     navUlElement.append(homeElement,usersElement,albumsElement,postsElement)
+    
 
     let searchForm = document.createElement('form')
     searchForm.id = 'searchForm'
@@ -69,6 +70,7 @@ function init(){
 
     searchForm.action = './search.html?search_input='+InputTextElement.name
 }
+
 
 
 

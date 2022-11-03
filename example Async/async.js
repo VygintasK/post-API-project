@@ -31,3 +31,5 @@ function fetchData() {
   }
   
   asyncAwaitFetchData();
+
+  //!!!!! galima await rasyt pries callback ANONIMINES funkcijas tipo pries skliaustus kazkas tokio

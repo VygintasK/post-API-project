@@ -1,10 +1,11 @@
+import initHeader from './header.js'
+import {firstLetterUpper,param} from './functions.js'
+
+initHeader()
 init()
+
 function init(){
-    const queryParams = document.location.search;
-    const urlParams = new URLSearchParams(queryParams);
-    const userID = urlParams.get('user_id');
-    console.log(queryParams)
-    console.log(userID)
+    const userID = param('user_id')
     
     const usersWrapper = document.querySelector('.usersWrapper')
     if(userID) {
@@ -41,7 +42,7 @@ function init(){
             let userPostsArr = user.posts
             userPostsArr.forEach(post => {
                 let postTitleElement = document.createElement('li')
-                postTitleElement.innerHTML = `post id ${post.id}: <a href="./post.html?post_id=${post.id}">${post.title}</a>`
+                postTitleElement.innerHTML = `post id ${post.id}: <a href="./post.html?post_id=${post.id}">${firstLetterUpper(post.title)}</a>`
                 userPostUl.append(postTitleElement)
             });
     
@@ -50,7 +51,7 @@ function init(){
             .then(albumsArr => {
                 albumsArr.forEach(album => {
                     let albumTitleElement = document.createElement('li')
-                    albumTitleElement.innerHTML = `album id ${album.id}: <a href='./album.html?album_id=${album.id}'> ${album.title}</a>`
+                    albumTitleElement.innerHTML = `album id ${album.id}: <a href='./album.html?album_id=${album.id}'> ${firstLetterUpper(album.title)}</a>`
                     userAlbumUl.append(albumTitleElement) 
                 })
             })
