@@ -1,8 +1,6 @@
 import initHeader from './header.js'
 initHeader()
-import {firstLetterUpper as upperCase} from './functions.js'
-
-import {param} from './functions.js'
+import {param, errorIdFunction, firstLetterUpper as upperCase, renderComments} from './functions.js'
 
 init()
 async function init(){
@@ -15,48 +13,27 @@ async function init(){
         const response = await fetch(`https://jsonplaceholder.typicode.com/posts?id=${PostID}&_expand=user&_embed=comments`)
         const postsArr = await response.json()
 
-            if (!postsArr[0].id){
-                errorIdFunction(postWrapper,'incorrect id','index') 
-                return
-            }
-            let {title, user, body, comments, userId} = postsArr[0]
-            postWrapper.innerHTML = `
-            <h1>${upperCase(title)}</h1>
-            <a href='http://${user.website}'> <h4>${user.name} website</h4> </a>
-            <p>${upperCase(body)}</p>
-            <a href='./user.html?user_id=${userId}'>Kiti autoriaus įrašai</a>
-            <h3>ALL COMMENTS:</h3>`
+        if (!postsArr[0].id){
+            errorIdFunction(postWrapper,'incorrect id','index') 
+            return
+        }
+        let {title, user, body, comments, userId} = postsArr[0]
+        postWrapper.innerHTML = `
+        <h1>${upperCase(title)}</h1>
+        <a href='http://${user.website}'> <h4>${user.name} website</h4> </a>
+        <p>${upperCase(body)}</p>
+        <a href='./user.html?user_id=${userId}'>Kiti autoriaus įrašai</a>`
+        let postComments = document.createElement('div')
+            postComments.classList.add('commentsWrap')
+        renderComments(comments, postComments)
+        postWrapper.append(postComments)
 
             
-
-
-            //pasidaryt coment render funkcija
-
-            let postComments = document.createElement('div')
-            let commentWrapUl = document.createElement('ul')
-            postComments.append(commentWrapUl)
-            postWrapper.append(postComments)
-    
-            comments.forEach(comment => {
-                let commentLi = document.createElement('li')
-                commentLi.innerHTML =`
-                <h4>${upperCase(comment.name)}</h4>
-                <p>${upperCase(comment.body)}</p>
-                <a href='#'>${comment.email}</a>`
-    
-                commentWrapUl.append(commentLi)
-            });
-        
     } else {
         errorIdFunction(postWrapper,'no id','index')
     }   
 }
-function errorIdFunction(wrap,reason,redirect){
-    let error = document.createElement('span')
-    error.innerHTML =`<h1>ERROR - ${reason}</h1>
-                      <a href=./${redirect}.html> <= Go back</a>`
-    wrap.append(error)
-}
+
 
 
 

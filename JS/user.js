@@ -1,5 +1,5 @@
 import initHeader from './header.js'
-import {firstLetterUpper,param} from './functions.js'
+import { param, errorIdFunction, firstLetterUpper} from './functions.js'
 
 initHeader()
 init()
@@ -60,12 +60,6 @@ function init(){
     } else {
         errorIdFunction(usersWrapper,'no id','users')
     }
-}
-function errorIdFunction(wrap,reason,redirect){
-    let error = document.createElement('span')
-    error.innerHTML =`<h1>ERROR - ${reason}</h1>
-                      <a href=./${redirect}.html> <= Go back</a>`
-    wrap.append(error)
 }
 
 // 3. Sukurti naują puslapį user.html, kuriame bus atvaizduojama vartotojo informacija:
