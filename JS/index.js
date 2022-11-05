@@ -10,7 +10,7 @@ async function initIndex(){
     
     data.forEach(element => {
         let {userId, body , user, comments, title  } = element
-        
+        console.log(element)
         let postWrap = document.createElement('div')
         let postTitle = document.createElement('h2')
             postTitle.classList.add('postTitle')
