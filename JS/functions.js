@@ -64,3 +64,27 @@ export function renderAlbums(albumsArr, allPostsWrapper){
         albumWrapElement.append(albumElementLi)
     })
 }
+export async function renderPost(postData){
+    const resUser = await fetch(`https://jsonplaceholder.typicode.com/users/${postData.userId}`)
+    const userArr = await resUser.json()
+
+    let wrapper = document.createElement('div')
+    wrapper.classList.add('temp')
+    wrapper.innerHTML = `
+    <h2>${postData.title}</h2>
+    <p>${postData.body}</p>
+    <p><strong>${userArr.name}</strong> - user id: ${postData.userId}, post id: ${postData.id}</p>
+    <a href='./edit-post.html?post_id=${postData.id}'>edit post</a>`
+    return wrapper
+}
+export async function renderUserSelectOptions(postUserSelect){
+    const response = await fetch(`https://jsonplaceholder.typicode.com/users`)
+    const resultArr = await response.json()
+
+    resultArr.forEach(user => {
+        let postOption = document.createElement('option')
+        postOption.textContent = user.name
+        postOption.value = user.id
+        postUserSelect.append(postOption)
+    });
+}

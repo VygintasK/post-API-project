@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>edit-post</title>
 </head>
 <body>
-    <form id="postForm">
-        <input type="text" id="postTitle" placeholder="Write title">
+    <form id="editForm">
+        <input type="text" id="editTitle" placeholder="Write title">
         <textarea name="textArea" id="textArea" cols="30" rows="10" placeholder="Write your post"></textarea>
         <select name="UserNameSelect" id="userNameSelect">
         </select>
-        <input id="postSubmit" type="submit">
+        <input id="editSubmit" type="submit">
     </form>
 
-    <script type="module" src="./JS/create-post.js"></script>
+    <div class="editWrapper"></div>
+
+    
+    <script type="module" src="./JS/edit-post.js"></script>
 </body>
 </html>

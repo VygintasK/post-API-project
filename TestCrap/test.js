@@ -1,27 +1,62 @@
+import { fetchData, createElement } from './functions.js';
+
+function init() {
+  const createPostForm = document.querySelector('#create-post-form');
+  const usersSelectElement = createPostForm.querySelector('#author');
+  const newPostReviewElement = document.querySelector('#new-post-review');
+
+  createAuthorOptionElements(usersSelectElement);
+
+  createPostForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const title = event.target.elements.title.value;
+    const body = event.target.elements.body.value;
+    const userId = event.target.elements.author.value;
+
+    const newPostObj = {
+      title,
+      body,
+      userId
+    };
+
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      body: JSON.stringify(newPostObj),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+
+    const newPost = await res.json()
+    const newPostElement = await createNewPostElement(newPost);
+
+    newPostReviewElement.innerHTML = '';
+    newPostReviewElement.append(newPostElement);
+
+    event.target.reset();
+  })
+}
 
 
-let a = document.createElement('a')
-let img = document.createElement('img')
-img.setAttribute('src','./123small.jpg')
-a.setAttribute('href','./123.jpg')
-a.setAttribute('data-pswp-width','1669')
-a.setAttribute('data-pswp-height','2500')
-a.setAttribute('target','_blank')
-let wrap = document.querySelector('#gallery--getting-started')
-a.append(img)
-wrap.prepend(a)
 
-// Include Lightbox 
-import PhotoSwipeLightbox from '/photoswipe/dist/photoswipe-lightbox.esm.js';
+async function createAuthorOptionElements(selectElement) {
+  const users = await fetchData('https://jsonplaceholder.typicode.com/users');
+  
+  users.map(user => {
+    const optionElement = createElement('option', user.name);
+    optionElement.value = user.id;
 
-const lightbox = new PhotoSwipeLightbox({
-  // may select multiple "galleries"
-  gallery: '#gallery--getting-started',
+    selectElement.append(optionElement);
+  })
+}
 
-  // Elements within gallery (slides)
-  children: 'a',
+async function createNewPostElement(post) {
+  const user = await fetchData(`https://jsonplaceholder.typicode.com/users/${post.userId}`);
+  const newPostElement = createElement('div', '', 'new-post');
+  newPostElement.innerHTML = `<h2 class="post-title">${post.title} (id: ${post.id})</h2>
+                              <span>Author: ${user.name}</span>
+                              <p>${post.body}</p>`;
+  return newPostElement;
+}
 
-  // setup PhotoSwipe Core dynamic import
-  pswpModule: () => import('/photoswipe/dist/photoswipe.esm.js')
-});
-lightbox.init();
+init();

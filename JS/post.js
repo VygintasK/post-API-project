@@ -1,7 +1,7 @@
 import initHeader from './header.js'
-initHeader()
 import {param, errorIdFunction, firstLetterUpper as upperCase, renderComments} from './functions.js'
 
+initHeader()
 init()
 async function init(){
     const PostID = param('post_id')
@@ -22,7 +22,8 @@ async function init(){
         <h1>${upperCase(title)}</h1>
         <a href='http://${user.website}'> <h4>${user.name} website</h4> </a>
         <p>${upperCase(body)}</p>
-        <a href='./user.html?user_id=${userId}'>Kiti autoriaus įrašai</a>`
+        <a href='./user.html?user_id=${userId}'>Kiti autoriaus įrašai</a>
+        <a href='./edit-post.html?post_id=${PostID}'>|EDIT POST|</a>`
         let postComments = document.createElement('div')
             postComments.classList.add('commentsWrap')
         renderComments(comments, postComments)
