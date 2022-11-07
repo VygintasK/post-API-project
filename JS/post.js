@@ -1,5 +1,5 @@
 import initHeader from './header.js'
-import {param, errorIdFunction, firstLetterUpper as upperCase, renderComments} from './functions.js'
+import {param, errorIdFunction,createElement, firstLetterUpper as upperCase, renderComments} from './functions.js'
 
 initHeader()
 init()
@@ -27,8 +27,40 @@ async function init(){
         let postComments = document.createElement('div')
             postComments.classList.add('commentsWrap')
         renderComments(comments, postComments)
-        postWrapper.append(postComments)
 
+        ////////////////////CREATING COMMENT WORK IN PROGRESS
+        let createComWrap = createElement('div','createComWrap')
+        let createComForm = createElement('form',"createComForm")
+        createComForm.innerHTML = `
+        <input type="text" id="createComTittle" placeholder="Write title">
+        <textarea id="createComText" cols="30" rows="10" placeholder="Write your Comment"></textarea>
+        <input type="email" id="createComEmail" placeholder="Write email">
+        <input id="createComSubmit" type="submit" value="Submit Comment">
+        `
+        createComWrap.append(createComForm)
+
+        postWrapper.append(createComWrap,postComments)
+        createComForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            console.log(event.target.elements.createComTittle.value)
+            console.log(event.target.elements.createComEmail.value)
+            console.log(event.target.elements.createComText.value)
+
+            let newComObj = {
+                postId: PostID,
+                name: event.target.elements.createComTittle.value,
+                email: event.target.elements.createComEmail.value,
+                body: event.target.elements.createComText.value,
+            }
+
+            let newComment = postComment(newComObj)
+            console.log(await newComment)
+        })
+
+
+
+
+        
             
     } else {
         errorIdFunction(postWrapper,'no id','index')
@@ -44,3 +76,15 @@ async function init(){
 //   7.3. Įrašo turinį.
 //   7.4. Įrašo komentarus. Komentarai turi būti atvaizduojami tokiu pačiu principu kaip ir pagrindiniame puslapyje.
 //   7.5. Nuoroda „Kiti autoriaus įrašai", kurią paspaudus bus nukreipiama į naują puslapį posts.html. Jame bus atvaizduojami visi šio vartotojo įrašai.
+async function postComment(newComObj){
+    const resPut = await fetch(`https://jsonplaceholder.typicode.com/comments`, {
+
+        method: 'POST',
+        body: JSON.stringify(newComObj),
+        headers:{
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+    const newCommentReturn = await resPut.json()
+    return newCommentReturn
+}

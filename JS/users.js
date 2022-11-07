@@ -5,11 +5,14 @@ initHeader()
 init()
 async function init(){
     let usersWrapper = document.querySelector('.usersWrapper')
+    let createUser = document.createElement('a')
+    createUser.textContent = '|CREATE USER|'
+    createUser.href = './create-user.html'
     let usersContentWrapper = document.createElement('div')
     let userTitleElement = document.createElement('h1')
     userTitleElement.textContent = 'All Users:'
 
-    usersWrapper.append(userTitleElement, usersContentWrapper)
+    usersWrapper.append(createUser,userTitleElement, usersContentWrapper)
     
     const response = await fetch('https://jsonplaceholder.typicode.com/users?_embed=posts')
     const usersArr = await response.json()

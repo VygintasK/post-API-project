@@ -20,6 +20,9 @@ function init(){
             let {street, suite, city, zipcode, geo } = address
     
             let userGoogle = `https://maps.google.com/maps?q=${geo.lat},${geo.lng}`
+            let editUser = document.createElement('a')
+            editUser.textContent = '|EDIT USER|'
+            editUser.href = './edit-user.html'
             let userPostUl = document.createElement('ul')
             let userPostHeader = document.createElement('h3')
             userPostHeader.textContent = 'All comments:'
@@ -36,7 +39,7 @@ function init(){
             <p><strong>Web address: </strong><a target='_blank' href='http://www.hildegard.org'>${website}</a></p>
             <p><strong>Working at: </strong>${company.name}</p>
             <p><strong>Address: </strong><a target='_blank' href='${userGoogle}'>${street}, ${suite}, ${city}, ${zipcode}</a></p>`
-    
+            usersWrapper.prepend(editUser)
             usersWrapper.append(userPostHeader,userPostUl, userAlbumTittle, userAlbumUl)
     
             let userPostsArr = user.posts

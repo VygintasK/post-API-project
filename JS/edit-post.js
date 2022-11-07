@@ -35,11 +35,10 @@ async function init(){
             id: postID,
             title: editTitle.value,
             body: textArea.value,
-            userId:UserNameSelect.value,
+            userId: UserNameSelect.value,
         }
         
         let updatedOBJ = await updatedApiPost(postID,updateOBJ)
-        console.log(updatedOBJ)
 
         editWrapper.innerHTML=''
 

@@ -95,7 +95,6 @@ export async function renderUserSelectOptions(postUserSelect){
     });
 }
 export async function updatedApiPost(postID,updateOBJ){
-    console.log(postID,updateOBJ)
     const resPut = await fetch(`https://jsonplaceholder.typicode.com/posts/${postID}`, {
         method: 'PUT',
         body: JSON.stringify(updateOBJ),
@@ -106,4 +105,18 @@ export async function updatedApiPost(postID,updateOBJ){
     const updatedPostData = await resPut.json()
     return updatedPostData
 
+}
+
+//SITA REIK SUTVARKYT IR PATIKRINT
+export function renderSingleComment(commentOBJ){
+
+    let {name, body, email}= comment
+    let commentName = document.createElement('h4')
+        commentName.textContent = firstLetterUpper(name)
+    let commentBody = document.createElement('p')
+        commentBody.textContent = '- '+firstLetterUpper(body)
+    let commentEmail = document.createElement('a')
+        commentEmail.textContent = email
+        commentEmail.setAttribute('href','#')
+    commentWrap.append(commentName,commentBody,commentEmail)
 }
