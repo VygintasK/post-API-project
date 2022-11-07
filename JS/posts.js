@@ -8,7 +8,10 @@ async function init(){
     let postsContentWrapper = document.createElement('div')
     let postTitleElement = document.createElement('h1')
         postTitleElement.textContent = 'All Posts:'
-    postsWrapper.append(postTitleElement, postsContentWrapper)
+    let createPost = document.createElement('a')
+        createPost.textContent = '|CREATE NEW POST|' 
+        createPost.href = './create-post.html'
+    postsWrapper.append(createPost, postTitleElement, postsContentWrapper)
 
     const response = await fetch('https://jsonplaceholder.typicode.com/posts')
     const postsArr = await response.json()

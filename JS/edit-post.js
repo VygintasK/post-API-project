@@ -1,14 +1,18 @@
 import initHeader from './header.js'
-import {param, renderUserSelectOptions,renderPost} from './functions.js'
+import {param, updatedApiPost,createElement, renderUserSelectOptions,renderPost} from './functions.js'
 
 initHeader()
-// turiu funkcija bet kolkas manual darau. Poto perrasyt
-const queryParams = document.location.search
-const urlParams = new URLSearchParams(queryParams)
-const searchId = urlParams.get('post_id');
 
+
+
+init()
 async function init(){
-    const postID = searchId
+    const postID=param('post_id')
+    if(!postID){
+        let errorMassage = createElement('h1', 'errorMassage', 'ERROR - No id found')
+        document.body.prepend(errorMassage)
+        return
+    }
     let editWrapper = document.querySelector('.editWrapper')
     let title = document.querySelector('#editTitle')
     let textarea = document.querySelector('#textArea')
@@ -17,7 +21,7 @@ async function init(){
     
     renderUserSelectOptions(nameSelect)
     
-    const response = await fetch(`https://jsonplaceholder.typicode.com/posts?id=${postID}&_expand=user`)
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts?id=${postID}`)
     const postsData = await response.json()
     let data = postsData[0]
     title.value = data.title
@@ -34,7 +38,7 @@ async function init(){
             userId:UserNameSelect.value,
         }
         
-        let updatedOBJ = await updatedPost(postID,updateOBJ)
+        let updatedOBJ = await updatedApiPost(postID,updateOBJ)
         console.log(updatedOBJ)
 
         editWrapper.innerHTML=''
@@ -42,29 +46,6 @@ async function init(){
         let updatedPostElement = renderPost(updatedOBJ)
         editWrapper.append(await updatedPostElement)
     })
-
 }
-init()
-
-
-
-
-
-
-
-  // console.log(await renderPost(...postsData))
     
 
-async function updatedPost(postID,updateOBJ){
-    console.log(postID,updateOBJ)
-    const resPut = await fetch(`https://jsonplaceholder.typicode.com/posts/${postID}`, {
-        method: 'PUT',
-        body: JSON.stringify(updateOBJ),
-        headers:{
-            'Content-type': 'application/json; charset=UTF-8',
-        },
-    })
-    const updatedPostData = await resPut.json()
-    return updatedPostData
-
-}

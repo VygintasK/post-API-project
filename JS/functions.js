@@ -7,6 +7,12 @@ export function param(getName_Id){
     const resultId = urlParams.get(getName_Id);
     return resultId
 }
+export function createElement(elType, elClass, elText){
+    let element = document.createElement(elType)
+    element.classList.add(elClass)
+    element.textContent = elText
+    return element
+}
 export function renderComments(comments, commentWrap){
 
     let commentSectionIndicator = document.createElement('h3')
@@ -87,4 +93,17 @@ export async function renderUserSelectOptions(postUserSelect){
         postOption.value = user.id
         postUserSelect.append(postOption)
     });
+}
+export async function updatedApiPost(postID,updateOBJ){
+    console.log(postID,updateOBJ)
+    const resPut = await fetch(`https://jsonplaceholder.typicode.com/posts/${postID}`, {
+        method: 'PUT',
+        body: JSON.stringify(updateOBJ),
+        headers:{
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+    const updatedPostData = await resPut.json()
+    return updatedPostData
+
 }
