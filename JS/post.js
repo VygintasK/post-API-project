@@ -6,7 +6,7 @@ init()
 async function init(){
     const PostID = param('post_id')
     console.log(PostID)
-    
+
     const postWrapper = document.querySelector('.PostWrapper')
     if (PostID) {
 
