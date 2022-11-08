@@ -4,8 +4,10 @@ export function firstLetterUpper(text){
 export function param(getName_Id){
     const queryParams = document.location.search;
     const urlParams = new URLSearchParams(queryParams);
-    const resultId = urlParams.get(getName_Id);
-    return resultId
+    const resultParam = urlParams.get(getName_Id);
+    return resultParam
+    
+
 }
 export function createElement(elType, elClass, elText){
     let element = document.createElement(elType)
@@ -106,8 +108,7 @@ export async function updatedApiPost(postID,updateOBJ){
     return updatedPostData
 
 }
-
-//SITA REIK SUTVARKYT IR PATIKRINT
+//SITA REIK SUTVARKYT IR PATIKRINT - niekur nenaudojama
 export function renderSingleComment(commentOBJ){
 
     let {name, body, email}= comment
@@ -120,3 +121,54 @@ export function renderSingleComment(commentOBJ){
         commentEmail.setAttribute('href','#')
     commentWrap.append(commentName,commentBody,commentEmail)
 }
+
+export function pegination(pagesCount,searchPage){
+    let pagesWrapper = createElement('div','pagesWrapper')
+    searchPage = Number(searchPage)
+    if(!searchPage){
+        searchPage=1
+    } 
+
+
+    for (let i=1; i<=pagesCount; i+=1){
+        let loopPageNumber = i
+        let page
+        if (loopPageNumber == searchPage){
+            page = createElement('span',`page${i}`,`${i}`)
+        } else{
+            page = createElement('a',`page${i}`,`${i}`)
+        }
+        page.href = `.${document.location.pathname}?page=${i}`
+        pagesWrapper.append(page)
+    }
+
+    let firstPage = 1
+    let first
+    let last
+    let next
+    let prev
+    if (firstPage == searchPage){
+        first = createElement('span','first',' First ')
+        prev = createElement('span','prev','Prev')
+    } else{
+        first = createElement('a','first',' << First ')
+        first.href = `.${document.location.pathname}?page=${firstPage}`
+        prev = createElement('a','prev',' < Prev ')
+        prev.href = `.${document.location.pathname}?page=${searchPage-1}`
+    }
+
+    if (pagesCount == searchPage){
+        last = createElement('span','last',' Last ')
+        next = createElement('span','next','Next')
+    }else{
+        last = createElement('a','last',' Last >> ')
+        last.href = `.${document.location.pathname}?page=${pagesCount}`
+        next = createElement('a','next',' Next > ')
+        next.href = `.${document.location.pathname}?page=${searchPage+1}`
+    }
+
+    pagesWrapper.prepend(first,prev)
+    pagesWrapper.append(next,last)
+    
+    return pagesWrapper
+} 
