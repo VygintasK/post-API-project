@@ -156,7 +156,7 @@ export function pegination(searchPage,totalItems, defaultLimit){
         } else{
             page = createElement('a',`page${i}`,`${i}`)
         }
-        page.href = `.${document.location.pathname}?page=${i}&limit=${limit}`
+        page.href = `${location.origin}${document.location.pathname}?page=${i}&limit=${limit}`
         pagesWrapper.append(page)
     }
 
