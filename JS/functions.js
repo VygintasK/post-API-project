@@ -183,8 +183,9 @@ export function pegination(searchPage,totalItems, defaultLimit){
         last.href = `${location.origin}${location.pathname}?page=${pagesCount}&limit=${limit}`
         next = createElement('a','next',' Next > ')
         next.href = `${location.origin}${location.pathname}?page=${searchPage+1}&limit=${limit}`
-        console.log(next.href)
-        console.log(location)
+        // console.log(`${location.origin}${location.pathname}?page=${searchPage+1}&limit=${limit}`)
+        // console.log(`${location.pathname}?page=${searchPage+1}&limit=${limit}`)
+        // console.log(location)
     }
     pagesWrapper.prepend(first,prev)
     pagesWrapper.append(next,last,selectLimit)
