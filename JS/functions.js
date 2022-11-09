@@ -122,13 +122,31 @@ export function renderSingleComment(commentOBJ){
     commentWrap.append(commentName,commentBody,commentEmail)
 }
 
-export function pegination(pagesCount,searchPage){
+export function pegination(searchPage,totalItems, defaultLimit){
     let pagesWrapper = createElement('div','pagesWrapper')
     searchPage = Number(searchPage)
     if(!searchPage){
         searchPage=1
     } 
-
+    console.log(defaultLimit)
+    let selectLimit = createElement('select','limitSelect')
+    selectLimit.innerHTML =`
+    <option value='5'>5 items</option>
+    <option value='7'>7 items</option>
+    <option value='10'>10 items</option>
+    <option value='15'>15 items</option>
+    <option value='20'>20 items</option>
+    <option value='25'>25 items</option>
+    `
+    let limit
+    console.log('param limit',param('limit'))
+    limit = param('limit')
+    if(!limit){
+        limit = defaultLimit
+        console.log('Jei limit null tai :',limit,'is selekto defaulto')
+    }
+    selectLimit.value=limit
+    let pagesCount = Math.ceil(totalItems / limit)
 
     for (let i=1; i<=pagesCount; i+=1){
         let loopPageNumber = i
@@ -138,7 +156,7 @@ export function pegination(pagesCount,searchPage){
         } else{
             page = createElement('a',`page${i}`,`${i}`)
         }
-        page.href = `.${document.location.pathname}?page=${i}`
+        page.href = `.${document.location.pathname}?page=${i}&limit=${limit}`
         pagesWrapper.append(page)
     }
 
@@ -152,9 +170,9 @@ export function pegination(pagesCount,searchPage){
         prev = createElement('span','prev','Prev')
     } else{
         first = createElement('a','first',' << First ')
-        first.href = `.${document.location.pathname}?page=${firstPage}`
+        first.href = `.${document.location.pathname}?page=${firstPage}&limit=${limit}`
         prev = createElement('a','prev',' < Prev ')
-        prev.href = `.${document.location.pathname}?page=${searchPage-1}`
+        prev.href = `.${document.location.pathname}?page=${searchPage-1}&limit=${limit}`
     }
 
     if (pagesCount == searchPage){
@@ -162,13 +180,25 @@ export function pegination(pagesCount,searchPage){
         next = createElement('span','next','Next')
     }else{
         last = createElement('a','last',' Last >> ')
-        last.href = `.${document.location.pathname}?page=${pagesCount}`
+        last.href = `.${document.location.pathname}?page=${pagesCount}&limit=${limit}`
         next = createElement('a','next',' Next > ')
-        next.href = `.${document.location.pathname}?page=${searchPage+1}`
+        next.href = `.${document.location.pathname}?page=${searchPage+1}&limit=${limit}`
     }
-
     pagesWrapper.prepend(first,prev)
-    pagesWrapper.append(next,last)
+    pagesWrapper.append(next,last,selectLimit)
+
+
+    selectLimit.addEventListener('input',(event)=>{
+        let selectLimit = event.target.value
+        console.log(selectLimit)
+        window.location.replace(`.${document.location.pathname}?page=${searchPage}&limit=${selectLimit}`)
+    })
+
+
+
+    
+
+
     
     return pagesWrapper
 } 

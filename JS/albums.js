@@ -7,16 +7,18 @@ init()
 
 async function init(){
     let searchPage = param('page')
-    let total = 100
-    let limit = 10
-    let pagesCount = Math.ceil(total / limit)
-    let pagesWrapperReturned = pegination(pagesCount, searchPage)
-
+    let limit = param('limit')
+    let defaultLimit = 5
+    defaultLimit=(limit)?limit:defaultLimit
 
     let albumsWrapper = document.querySelector('.albumsWrapper')
-    const response = await fetch(`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos&_page=${searchPage}&_limit=${limit}`)
+    const response = await fetch(`https://jsonplaceholder.typicode.com/albums?_expand=user&_embed=photos&_page=${searchPage}&_limit=${defaultLimit}`)
     const albumsArr = await response.json()
-    renderAlbums(albumsArr,albumsWrapper)
+    const totalItems = response.headers.get('x-total-count')
+
+    let pagesWrapperReturned = pegination(searchPage,totalItems,defaultLimit)
+
+    renderAlbums(albumsArr,albumsWrapper,defaultLimit)
     albumsWrapper.prepend(pagesWrapperReturned)
 }
 // 9. Tokiu pačiu principu, kaip ir vartotojų puslapį, sukurti puslapį albumams (albums.html).

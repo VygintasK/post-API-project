@@ -1,18 +1,22 @@
 import initHeader from './header.js'
 import {firstLetterUpper, param, pegination} from './functions.js'
-
 initHeader()
 init()
+
 async function init(){
     let searchPage = param('page')
-    let postsWrapper = document.querySelector('.postsWrapper')
-    let total = 100
-    let limit = 25
-    let pagesCount = Math.ceil(total / limit)
-    let pagesWrapperReturned = pegination(pagesCount,searchPage)
-    
+    let limit = param('limit')
+    let defaultLimit = 25
+    defaultLimit=(limit)?limit:defaultLimit
     
 
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts?_page=${searchPage}&_limit=${defaultLimit}`)
+    const postsArr = await response.json()
+    const totalItems = response.headers.get('x-total-count')
+
+    let pagesWrapperReturned = pegination(searchPage,totalItems,defaultLimit)
+
+    let postsWrapper = document.querySelector('.postsWrapper')
     let postsContentWrapper = document.createElement('div')
     let postTitleElement = document.createElement('h1')
         postTitleElement.textContent = 'All Posts:'
@@ -21,8 +25,7 @@ async function init(){
         createPost.href = './create-post.html'
     postsWrapper.append(pagesWrapperReturned,createPost, postTitleElement, postsContentWrapper)
 
-    const response = await fetch(`https://jsonplaceholder.typicode.com/posts?_page=${searchPage}&_limit=${limit}`)
-    const postsArr = await response.json()
+
 
     renderPostsOrUsers(postsArr, postsContentWrapper)
 
