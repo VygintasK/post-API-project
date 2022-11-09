@@ -184,6 +184,7 @@ export function pegination(searchPage,totalItems, defaultLimit){
         next = createElement('a','next',' Next > ')
         next.href = `.${document.location.pathname}?page=${searchPage+1}&limit=${limit}`
     }
+    console.log(document.location)
     pagesWrapper.prepend(first,prev)
     pagesWrapper.append(next,last,selectLimit)
 
@@ -191,7 +192,7 @@ export function pegination(searchPage,totalItems, defaultLimit){
     selectLimit.addEventListener('input',(event)=>{
         let selectLimit = event.target.value
         console.log(selectLimit)
-        window.location.replace(`.${document.location.pathname}?page=${searchPage}&limit=${selectLimit}`)
+        window.location.replace(`${document.location.pathname}?page=${searchPage}&limit=${selectLimit}`)
     })
 
 
