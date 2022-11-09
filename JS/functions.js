@@ -170,9 +170,9 @@ export function pegination(searchPage,totalItems, defaultLimit){
         prev = createElement('span','prev','Prev')
     } else{
         first = createElement('a','first',' << First ')
-        first.href = `.${document.location.pathname}?page=${firstPage}&limit=${limit}`
+        first.href = `${location.origin}${location.pathname}?page=${firstPage}&limit=${limit}`
         prev = createElement('a','prev',' < Prev ')
-        prev.href = `.${document.location.pathname}?page=${searchPage-1}&limit=${limit}`
+        prev.href = `${location.origin}${location.pathname}?page=${searchPage-1}&limit=${limit}`
     }
 
     if (pagesCount == searchPage){
@@ -180,9 +180,11 @@ export function pegination(searchPage,totalItems, defaultLimit){
         next = createElement('span','next','Next')
     }else{
         last = createElement('a','last',' Last >> ')
-        last.href = `.${document.location.pathname}?page=${pagesCount}&limit=${limit}`
+        last.href = `${location.origin}${location.pathname}?page=${pagesCount}&limit=${limit}`
         next = createElement('a','next',' Next > ')
         next.href = `${location.origin}${location.pathname}?page=${searchPage+1}&limit=${limit}`
+        console.log(next.href)
+        console.log(location)
     }
     pagesWrapper.prepend(first,prev)
     pagesWrapper.append(next,last,selectLimit)
@@ -191,7 +193,7 @@ export function pegination(searchPage,totalItems, defaultLimit){
     selectLimit.addEventListener('input',(event)=>{
         let selectLimit = event.target.value
         console.log(selectLimit)
-        window.location.replace(`${document.location.pathname}?page=${searchPage}&limit=${selectLimit}`)
+        window.location.replace(`${location.origin}${location.pathname}?page=${searchPage}&limit=${selectLimit}`)
         
     })
 
