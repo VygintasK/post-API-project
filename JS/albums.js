@@ -3,8 +3,6 @@ import {param,renderAlbums, pegination} from './functions.js'
 initHeader()
 init()
 
-
-
 async function init(){
     let searchPage = param('page')
     let limit = param('limit')
